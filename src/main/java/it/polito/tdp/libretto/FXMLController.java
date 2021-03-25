@@ -55,13 +55,13 @@ public class FXMLController {
     //TODO: convertire a tabella in modo che i dati si impilino correttamente
     private void Stampante (List<Voto> L) {
     	txtStampa.clear();
-    	txtStampa.appendText("Nome Corso \t\t");
-		txtStampa.appendText("Data \t\t");
-		txtStampa.appendText("Voto \t");
+    	txtStampa.appendText("Nome Corso \t\t\t");
+		txtStampa.appendText("Data \t\t\t");
+		txtStampa.appendText("Voto \t\t\t");
 		txtStampa.appendText("Punteggio \n");
     	for (int i=0; i<L.size(); i++) {
     		txtStampa.appendText(L.get(i).getNomeCorso()+" \t\t\t");
-    		txtStampa.appendText(L.get(i).getData()+" \t");
+    		txtStampa.appendText(L.get(i).getData()+" \t\t\t");
     		txtStampa.appendText(L.get(i).getVotoOttenuto()+" \t\t\t");
     		txtStampa.appendText(L.get(i).getPunteggio()+" \n");
     	}
@@ -83,7 +83,7 @@ public class FXMLController {
     		return;
     	}
     	
-    	this.Stampante(model.CercaCorso(txtCercaCorso.getText()));
+    	this.Stampante(model.CercaCorso(txtCercaCorso.getText().toUpperCase()));
     	txtCercaCorso.clear();
     }
 
@@ -146,7 +146,7 @@ public class FXMLController {
     		return;
     	}
     	
-    	this.model.InserisciNuovo(txtNomeCorso.getText(),dataData.getValue(),Integer.parseInt(txtVotoOttenuto.getText()));
+    	this.model.InserisciNuovo(txtNomeCorso.getText().toUpperCase(),dataData.getValue(),Integer.parseInt(txtVotoOttenuto.getText()));
     	
     	this.Stampante(model.getLibretto());
     	
