@@ -1,6 +1,9 @@
 package it.polito.tdp.libretto;
 
+import java.util.List;
+
 import it.polito.tdp.libretto.model.Model;
+import it.polito.tdp.libretto.model.Model.Voto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,35 +50,51 @@ public class FXMLController {
 
     @FXML
     private Button btnCancella;
+    
+    private void Stampante (List<Voto> L) {
+    	txtStampa.clear();
+    	for (int i=0; i<L.size(); i++) {
+    		txtStampa.appendText(L.get(i).getNomeCorso()+"/t");
+    		txtStampa.appendText(L.get(i).getData()+"/t");
+    		txtStampa.appendText(L.get(i).getNomeCorso()+"/t");
+    		txtStampa.appendText(L.get(i).getPunteggio()+"/n");
+    	}
+    }
 
     @FXML
     void doCancella(ActionEvent event) {
-
+    	this.Stampante(model.Cancella());
     }
 
     @FXML
     void doCercaCorso(ActionEvent event) {
-
+    	this.Stampante(model.CercaCorso(txtCercaCorso.getText()));
     }
 
     @FXML
     void doCercaVoto(ActionEvent event) {
+    	this.Stampante(model.CercaVoto(txtCercaVoto.getText()));
 
     }
 
     @FXML
     void doInserisciNuovo(ActionEvent event) {
+    	
+    	//model.InserisciNuovo(txtNomeCorso.getText(),dataData.getText(),txtVotoOttenuto.getText());
+    	
+    	this.Stampante(model.getLibretto());
+    	
 
     }
 
     @FXML
     void doStampaEsame(ActionEvent event) {
-
+    	this.Stampante(model.StampaEsame());
     }
 
     @FXML
     void doStampaVoto(ActionEvent event) {
-
+    	this.Stampante(model.StampaVoto());
     }
     
     @FXML
