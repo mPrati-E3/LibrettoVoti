@@ -53,14 +53,14 @@ public class FXMLController {
     
     private void Stampante (List<Voto> L) {
     	txtStampa.clear();
-    	txtStampa.appendText("Nome Corso \t");
-		txtStampa.appendText("Data \t");
+    	txtStampa.appendText("Nome Corso \t\t");
+		txtStampa.appendText("Data \t\t");
 		txtStampa.appendText("Voto \t");
 		txtStampa.appendText("Punteggio \n");
     	for (int i=0; i<L.size(); i++) {
-    		txtStampa.appendText(L.get(i).getNomeCorso()+" \t");
+    		txtStampa.appendText(L.get(i).getNomeCorso()+" \t\t\t");
     		txtStampa.appendText(L.get(i).getData()+" \t");
-    		txtStampa.appendText(L.get(i).getVotoOttenuto()+" \t");
+    		txtStampa.appendText(L.get(i).getVotoOttenuto()+" \t\t\t");
     		txtStampa.appendText(L.get(i).getPunteggio()+" \n");
     	}
     }
@@ -72,19 +72,64 @@ public class FXMLController {
 
     @FXML
     void doCercaCorso(ActionEvent event) {
+    	
+    	if (txtCercaCorso.getText()=="") {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il nome del corso non può essere vuoto! \n");
+    		return;
+    	}
+    	
     	this.Stampante(model.CercaCorso(txtCercaCorso.getText()));
     }
 
     @FXML
     void doCercaVoto(ActionEvent event) {
-    	this.Stampante(model.CercaVoto(txtCercaVoto.getText()));
+    	int CV=-1; 
+    	try {
+    		CV = Integer.parseInt(txtCercaVoto.getText());
+    	} catch (NumberFormatException e) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il voto deve essere numerico! \n");
+    		return;
+    	}
+    	if (CV<0) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il voto deve essere positivo! \n");
+    		return;
+    	}
+    	this.Stampante(model.CercaVoto(CV));
 
     }
 
     @FXML
     void doInserisciNuovo(ActionEvent event) {
     	
-    	this.model.InserisciNuovo(txtNomeCorso.getText(),dataData.getAccessibleText(),Integer.parseInt(txtVotoOttenuto.getText()));
+    	if (txtNomeCorso.getText()=="") {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il nome del corso non può essere vuoto! \n");
+    		return;
+    	}
+    	if (dataData.getValue()==null) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Scegli una data! \n");
+    		return;
+    	}
+    	
+    	int CV=-1; 
+    	try {
+    		CV = Integer.parseInt(txtVotoOttenuto.getText());
+    	} catch (NumberFormatException e) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il voto deve essere numerico! \n");
+    		return;
+    	}
+    	if (CV<0) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Il voto deve essere positivo! \n");
+    		return;
+    	}
+    	
+    	this.model.InserisciNuovo(txtNomeCorso.getText(),dataData.getValue(),Integer.parseInt(txtVotoOttenuto.getText()));
     	
     	this.Stampante(model.getLibretto());
     	

@@ -1,5 +1,6 @@
 package it.polito.tdp.libretto.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +9,7 @@ public class Model {
 	
 	public class Voto {
 		private String NomeCorso;
-		private String Data;
+		private LocalDate Data;
 		private int VotoOttenuto;
 		private int Punteggio;
 		
@@ -25,11 +26,11 @@ public class Model {
 			NomeCorso = nomeCorso;
 		}
 		
-		public String getData() {
+		public LocalDate getData() {
 			return Data;
 		}
-		public void setData(String data) {
-			Data = data;
+		public void setData(LocalDate localDate) {
+			Data = localDate;
 		}
 		
 		public int getVotoOttenuto() {
@@ -60,19 +61,19 @@ public class Model {
 		Libretto = libretto;
 	}
 
-	public List<Voto> CercaVoto(String text) {
+	public List<Voto> CercaVoto(int text) {
 		List<Voto> ListaCercaVoto = new ArrayList<Voto>();
 		for (int i=0; i<this.Libretto.size(); i++) {
-			if (this.Libretto.get(i).getVotoOttenuto()==Integer.parseInt(text)) {
+			if (this.Libretto.get(i).getVotoOttenuto()==text) {
 				ListaCercaVoto.add(this.Libretto.get(i));
 			}
 		}
 		return ListaCercaVoto;
 	}
 	
-	public void InserisciNuovo (String NC, String D, int V) {
+	public void InserisciNuovo (String NC, LocalDate localDate, int V) {
 		Voto VotBox = new Voto();
-		VotBox.setData(D);
+		VotBox.setData(localDate);
 		VotBox.setNomeCorso(NC);
 		VotBox.setVotoOttenuto(V);
 		if (V<18) {
