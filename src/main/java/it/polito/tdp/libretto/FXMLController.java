@@ -53,11 +53,15 @@ public class FXMLController {
     
     private void Stampante (List<Voto> L) {
     	txtStampa.clear();
+    	txtStampa.appendText("Nome Corso \t");
+		txtStampa.appendText("Data \t");
+		txtStampa.appendText("Voto \t");
+		txtStampa.appendText("Punteggio \n");
     	for (int i=0; i<L.size(); i++) {
-    		txtStampa.appendText(L.get(i).getNomeCorso()+"/t");
-    		txtStampa.appendText(L.get(i).getData()+"/t");
-    		txtStampa.appendText(L.get(i).getNomeCorso()+"/t");
-    		txtStampa.appendText(L.get(i).getPunteggio()+"/n");
+    		txtStampa.appendText(L.get(i).getNomeCorso()+" \t");
+    		txtStampa.appendText(L.get(i).getData()+" \t");
+    		txtStampa.appendText(L.get(i).getVotoOttenuto()+" \t");
+    		txtStampa.appendText(L.get(i).getPunteggio()+" \n");
     	}
     }
 
@@ -80,7 +84,7 @@ public class FXMLController {
     @FXML
     void doInserisciNuovo(ActionEvent event) {
     	
-    	//model.InserisciNuovo(txtNomeCorso.getText(),dataData.getText(),txtVotoOttenuto.getText());
+    	this.model.InserisciNuovo(txtNomeCorso.getText(),dataData.getAccessibleText(),Integer.parseInt(txtVotoOttenuto.getText()));
     	
     	this.Stampante(model.getLibretto());
     	
