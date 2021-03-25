@@ -51,6 +51,8 @@ public class FXMLController {
     @FXML
     private Button btnCancella;
     
+    //metodo che stampa nella casella dei messaggi
+    //TODO: convertire a tabella in modo che i dati si impilino correttamente
     private void Stampante (List<Voto> L) {
     	txtStampa.clear();
     	txtStampa.appendText("Nome Corso \t\t");
@@ -65,11 +67,13 @@ public class FXMLController {
     	}
     }
 
+    //richiama il metodo di cancellazione del model e poi stampa
     @FXML
     void doCancella(ActionEvent event) {
     	this.Stampante(model.Cancella());
     }
 
+    //controllo dell'input, richiama il metodo di ricerca corso del model e poi stampa
     @FXML
     void doCercaCorso(ActionEvent event) {
     	
@@ -80,8 +84,10 @@ public class FXMLController {
     	}
     	
     	this.Stampante(model.CercaCorso(txtCercaCorso.getText()));
+    	txtCercaCorso.clear();
     }
 
+    //controllo dell'input, richiama il metodo di ricerca voto del model e poi stampa
     @FXML
     void doCercaVoto(ActionEvent event) {
     	int CV=-1; 
@@ -97,10 +103,16 @@ public class FXMLController {
     		txtStampa.appendText("Il voto deve essere positivo! \n");
     		return;
     	}
+    	if (CV>31) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Più di 30 e lode! \n");
+    		return;
+    	}
     	this.Stampante(model.CercaVoto(CV));
-
+    	txtCercaVoto.clear();
     }
 
+    //controllo dell'input, richiama il metodo di ricerca inserimento del model e poi stampa
     @FXML
     void doInserisciNuovo(ActionEvent event) {
     	
@@ -128,19 +140,30 @@ public class FXMLController {
     		txtStampa.appendText("Il voto deve essere positivo! \n");
     		return;
     	}
+    	if (CV>31) {
+    		txtStampa.clear();
+    		txtStampa.appendText("Più di 30 e lode! \n");
+    		return;
+    	}
     	
     	this.model.InserisciNuovo(txtNomeCorso.getText(),dataData.getValue(),Integer.parseInt(txtVotoOttenuto.getText()));
     	
     	this.Stampante(model.getLibretto());
     	
+    	txtNomeCorso.clear();
+    	dataData.setValue(null);
+    	txtVotoOttenuto.clear();
+    	
 
     }
 
+    //richiama il metodo di stampa esame del model e poi stampa
     @FXML
     void doStampaEsame(ActionEvent event) {
     	this.Stampante(model.StampaEsame());
     }
 
+    //richiama il metodo di stampa voto del model e poi stampa
     @FXML
     void doStampaVoto(ActionEvent event) {
     	this.Stampante(model.StampaVoto());

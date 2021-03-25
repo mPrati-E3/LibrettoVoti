@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Model {
 	
+	//definisco la classe voto con tutti i relativi getter e setter
 	public class Voto {
 		private String NomeCorso;
 		private LocalDate Data;
@@ -51,6 +52,7 @@ public class Model {
 		
 	}
 	
+	//------------ Libretto principale === Lista di oggetti voto ---------------
 	private List<Voto> Libretto = new ArrayList<Voto>();
 
 	public List<Voto> getLibretto() {
@@ -60,7 +62,10 @@ public class Model {
 	public void setLibretto(List<Voto> libretto) {
 		Libretto = libretto;
 	}
-
+	
+	//---------------------------------------------------------------------------
+	
+	//filtra i voti per quello che ha inserito l'utente
 	public List<Voto> CercaVoto(int text) {
 		List<Voto> ListaCercaVoto = new ArrayList<Voto>();
 		for (int i=0; i<this.Libretto.size(); i++) {
@@ -71,11 +76,14 @@ public class Model {
 		return ListaCercaVoto;
 	}
 	
+	//inserisco un nuovo oggetto nella lista
 	public void InserisciNuovo (String NC, LocalDate localDate, int V) {
 		Voto VotBox = new Voto();
 		VotBox.setData(localDate);
 		VotBox.setNomeCorso(NC);
 		VotBox.setVotoOttenuto(V);
+		
+		//---------Attribuzione del punteggio come da traccia------
 		if (V<18) {
 			VotBox.setPunteggio(0);
 		} else if (V<24) {
@@ -85,19 +93,25 @@ public class Model {
 		} else {
 			VotBox.setPunteggio(2);
 		}
+		//---------------------------------------------------------
+		
+		
 		this.Libretto.add(VotBox);
 	}
 
+	//sorting della lista per il nome del corso (utilizzo di Comparator.comparing in Java 8)
 	public List<Voto> StampaEsame() {
 		Libretto.sort(Comparator.comparing(Voto::getNomeCorso));
 		return this.Libretto;
 	}
 
+	//sorting della lista per il voto in reverse (utilizzo di Comparator.comparing in Java 8)
 	public List<Voto> StampaVoto() {
 		Libretto.sort(Comparator.comparing(Voto::getVotoOttenuto).reversed());
 		return this.Libretto;
 	}
 
+	//filtra i corsi per quello che ha inserito l'utente
 	public List<Voto> CercaCorso(String text) {
 		List<Voto> ListaCercaCorso = new ArrayList<Voto>();
 		for (int i=0; i<this.Libretto.size(); i++) {
@@ -108,6 +122,7 @@ public class Model {
 		return ListaCercaCorso;
 	}
 
+	//cancella tutti i voti sotto a 24
 	public List<Voto> Cancella() {
 		for (int i=0; i<this.Libretto.size(); i++) {
 			if (this.Libretto.get(i).getVotoOttenuto()<24) {
