@@ -1,15 +1,22 @@
 package it.polito.tdp.libretto;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 import it.polito.tdp.libretto.model.Model;
 import it.polito.tdp.libretto.model.Model.Voto;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 
 public class FXMLController {
 	
@@ -51,20 +58,41 @@ public class FXMLController {
     @FXML
     private Button btnCancella;
     
+    @FXML
+    private TableView<Voto> tblStampa;
+
+    @FXML
+    private TableColumn<Voto, String> colNomeEsame;
+
+    @FXML
+    private TableColumn<Voto, LocalDate> colData;
+
+    @FXML
+    private TableColumn<Voto, Integer> colVotoOttenuto;
+
+    @FXML
+    private TableColumn<Voto, Integer> colPunteggio;
+    
+
     //metodo che stampa nella casella dei messaggi
-    //TODO: convertire a tabella in modo che i dati si impilino correttamente
     private void Stampante (List<Voto> L) {
+    	
     	txtStampa.clear();
-    	txtStampa.appendText("Nome Corso \t\t\t");
-		txtStampa.appendText("Data \t\t\t");
-		txtStampa.appendText("Voto \t\t\t");
-		txtStampa.appendText("Punteggio \n");
-    	for (int i=0; i<L.size(); i++) {
-    		txtStampa.appendText(L.get(i).getNomeCorso()+" \t\t\t");
-    		txtStampa.appendText(L.get(i).getData()+" \t\t\t");
-    		txtStampa.appendText(L.get(i).getVotoOttenuto()+" \t\t\t");
-    		txtStampa.appendText(L.get(i).getPunteggio()+" \n");
+    	
+    	for ( int i = 0; i<tblStampa.getItems().size(); i++) {
+    	    tblStampa.getItems().clear();
     	}
+    	
+        colNomeEsame.setCellValueFactory(new PropertyValueFactory<>("NomeCorso"));
+        colData.setCellValueFactory(new PropertyValueFactory<>("Data"));
+        colVotoOttenuto.setCellValueFactory(new PropertyValueFactory<>("VotoOttenuto"));
+        colPunteggio.setCellValueFactory(new PropertyValueFactory<>("Punteggio"));
+        
+        for (int i=0; i<L.size(); i++) {
+        	tblStampa.getItems().add(L.get(i));
+        }
+
+    	
     }
 
     //richiama il metodo di cancellazione del model e poi stampa
@@ -183,7 +211,12 @@ public class FXMLController {
         assert btnStampaEsame != null : "fx:id=\"btnStampaEsame\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnStampaVoto != null : "fx:id=\"btnStampaVoto\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Scene.fxml'.";
-
+        assert tblStampa != null : "fx:id=\"tblStampa\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert colNomeEsame != null : "fx:id=\"colNomeEsame\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert colData != null : "fx:id=\"colData\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert colVotoOttenuto != null : "fx:id=\"colVotoOttenuto\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert colPunteggio != null : "fx:id=\"colPunteggio\" was not injected: check your FXML file 'Scene.fxml'.";
+       
     }
     
     public void setModel(Model m) {
